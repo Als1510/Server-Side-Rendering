@@ -1,0 +1,57 @@
+<div class="container">
+  <h1>Server Side Rendering</h1>
+  <div class="fields-wrapper">
+    <div class="field">
+      <label for="category">Category:</label>
+      <input type="text" name="category" id="category" [(ngModel)]="category">
+    </div>
+    <div class="field">
+      <label for="productName">Product Name:</label>
+      <input type="text" name="productName" id="productName" [(ngModel)]="productName">
+    </div>
+    <div class="field">
+      <label for="productId">Product Id:</label>
+      <input type="text" name="productId" id="productId" [(ngModel)]="productId">
+    </div>
+    <div class="search-button">
+      <button type="button" (click)="onSearch()">Search</button>
+    </div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th (click)="onSort('productId')">Product Id</th>
+        <th (click)="onSort('productName')">Product Name</th>
+        <th (click)="onSort('category')">Category</th>
+        <th (click)="onSort('price')">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of productList">
+        <td>{{product.productId}}</td>
+        <td>{{product.productName}}</td>
+        <td>{{product.category}}</td>
+        <td>{{product.price}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="footer">
+    <select [(ngModel)]="pageSize" (change)="onSearch()">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
+    <ul>
+      <li [class.disabled]="pageNumber === 1">
+        <a (click)="onPageChange(pageNumber-1)">Previous</a>
+      </li>
+      <li *ngFor="let page of getPageNumbers()">
+        <a [class.active]="page === pageNumber" (click)="onPageChange(page)">{{page}}</a>
+      </li>
+      <li [class.disabled]="pageNumber === getValue()">
+        <a (click)="onPageChange(pageNumber+1)">Next</a>
+      </li>
+    </ul>
+  </div>
+</div>
